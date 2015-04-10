@@ -21,7 +21,7 @@ def isFriend(elementOfTopic):
 		reader = csv.reader(csvfile)
 		for row in reader:
 			if row [1] == currentusername:
-				for index, element in enumarate(row, start=3):
+				for index, element in enumerate(row, start=3):
 					if element == elementOfTopic:
 						foundFriend = True
 	return foundFriend
@@ -39,7 +39,12 @@ def printFeed():
 		reader = csv.reader(csvfile)
 		for row in reader:
 			if isFriend(row[0]) == True:
-				print row[0]
+				new_rows_list.append(row)
+				nextrow = reader.next()
+				new_rows_list.append(nextrow)
+	for feed in new_rows_list:
+		print feed[0]
+		print "<br>"
 
 
 #appends username and new post to csv
