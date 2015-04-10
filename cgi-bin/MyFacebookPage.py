@@ -14,13 +14,33 @@ def printMembers():
 			print "<li>" + row[1] + "</li>"
 		print "</ul>"
 
-#prints user's friends list (up to 10 posts)
-def printFeed():
-	with open('topic.csv','r') as csvfile:
+#searches if element of row is friend of crrent user
+def isFriend(elementOfTopic):
+	foundFriend = False
+	with open('members.csv','r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
-			print row[0]
-			print "<br>"
+			if row [1] == currentusername:
+				for index, element in enumarate(row, start=3):
+					if element == elementOfTopic:
+						foundFriend = True
+	return foundFriend
+
+#1) Read through topic.csv
+#2) 	Check if line contains username that is friend
+#3) 	Append that line to new_rows_list
+#4) 	Append NEXT line to new_rows_list
+#5) Print out last 20 fields of new_rows_list
+
+#prints user's friends list (up to 10 posts)
+def printFeed():
+	new_rows_list = []
+	with open('topic.csv', 'r') as csvfile:
+		reader = csv.reader(csvfile)
+		for row in reader:
+			if isFriend(row[0]) == True:
+				print row[0]
+
 
 #appends username and new post to csv
 def addPost():
@@ -37,8 +57,15 @@ def addFriend():
 			reader = csv.reader(csvfile)
 			for row in reader:
 				if row[1] == currentusername:
-					new_row = row + postForm.getvalue("friend").split()
-					new_rows_list.append(new_row)
+					foundFriend = False
+					for index, element in enumerate(row, start=3):
+						if element == postForm.getvalue("friend"):
+							foundFriend = True
+					if foundFriend == False:
+						new_row = row + postForm.getvalue("friend").split()
+						new_rows_list.append(new_row)
+					else:
+						new_rows_list.append(row)
 				else:
 					new_rows_list.append(row)
 		with open('members.csv','w') as csvfile:
@@ -93,7 +120,8 @@ print """
                             </p>
                                 <form method="POST" action="MyFacebookPage.py">
                             <p align="center">
-				<input type="hidden" name="username" value='""" + currentusername + """'>                                			    <input type="hidden" name="formname" value="addfriend">
+				<input type="hidden" name="username" value='""" + currentusername + """'>
+				<input type="hidden" name="formname" value="addfriend">
 				<input type="text" name="friend">
                             </p>
                             <p align="center">
