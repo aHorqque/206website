@@ -43,8 +43,11 @@ def printFeed():
 				nextrow = reader.next()
 				new_rows_list.append(nextrow)
 	for feed in new_rows_list:
-		print feed[0]
-		print "<br>"
+		counter = 0
+		if counter < 20:
+			print feed[0]
+			print "<br>"
+			counter += 1
 
 
 #appends username and new post to csv
