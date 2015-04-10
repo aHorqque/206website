@@ -16,21 +16,17 @@ def printMembers():
 
 #searches if element of row is friend of crrent user
 def isFriend(elementOfTopic):
+	print "<br>" + elementOfTopic
 	foundFriend = False
 	with open('members.csv','r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
-			if row [1] == currentusername:
-				for index, element in enumerate(row, start=3):
+			if row[1] == currentusername: #finds row of current user
+				for i, element in enumerate(row):
+					print "<b>" + element + "</b><br>"
 					if element == elementOfTopic:
 						foundFriend = True
 	return foundFriend
-
-#1) Read through topic.csv
-#2) 	Check if line contains username that is friend
-#3) 	Append that line to new_rows_list
-#4) 	Append NEXT line to new_rows_list
-#5) Print out last 20 fields of new_rows_list
 
 #prints user's friends list (up to 10 posts)
 def printFeed():
@@ -38,16 +34,16 @@ def printFeed():
 	with open('topic.csv', 'r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
-			if isFriend(row[0]) == True:
-				new_rows_list.append(row)
+			if isFriend(row[0]) == True: #if the element of the row is a friend
+				new_rows_list.append(row) #append the row and the next row
 				nextrow = reader.next()
 				new_rows_list.append(nextrow)
-	for feed in new_rows_list:
-		counter = 0
-		if counter < 20:
+	counter = 0
+	for feed in reversed(new_rows_list):
+		if counter < 20: #counting until 20 because it should be the 20 last fields
 			print feed[0]
 			print "<br>"
-			counter += 1
+			counter = counter+1
 
 
 #appends username and new post to csv
