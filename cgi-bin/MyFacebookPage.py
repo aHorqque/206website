@@ -20,17 +20,11 @@ def isFriend(elementOfTopic):
 	with open('../data/members.csv','r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
-			if row [1] == currentusername:
-				for index, element in enumerate(row, start=3):
+			if row[1] == currentusername: #finds row of current user
+				for i, element in enumerate(row, start=3):
 					if element == elementOfTopic:
 						foundFriend = True
 	return foundFriend
-
-#1) Read through topic.csv
-#2) 	Check if line contains username that is friend
-#3) 	Append that line to new_rows_list
-#4) 	Append NEXT line to new_rows_list
-#5) Print out last 20 fields of new_rows_list
 
 #prints user's friends list (up to 10 posts)
 def printFeed():
@@ -59,7 +53,7 @@ def printFeed():
 #appends username and new post to csv
 def addPost():
 	if (postForm.getvalue('formname') == "addpost"):
-		with open('topic.csv', 'a') as csvfile:
+		with open('../data/topic.csv', 'a') as csvfile:
                 	csvfile.write(currentusername + '\n')
 			csvfile.write(postForm.getvalue('joke') + '\n')
 
