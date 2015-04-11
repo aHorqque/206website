@@ -29,32 +29,35 @@ def isFriend(elementOfTopic):
 #prints user's friends list (up to 10 posts)
 def printFeed():
 	new_rows_list = []
+	print_feed = []
 	counter = 1 #keep track of the line we are at (odd = user, even = topic)
 	topicFromFriend =0 #We know if the next line will be a topic from friend
-	topicsPrinted = 0 #we only want 10 posts in news feed	
 	with open('../data/topic.csv', 'r') as csvfile:
 		reader = csv.reader(csvfile)
-		for row in reader:
-			if topicsPrinted > 10: #if we reached 10posts, we quit
-				break	
+		for row in reader:	
 			if counter%2==0:
 				if topicFromFriend==1:
-					new_rows_list.append((str(row).strip('[]')).strip("''"))
-					topicsPrinted=topicsPrinted+1
+					new_rows_list.append((str(row).strip('[]')).strip("''"))		
 			elif isFriend(row[0]) == True:
-				new_rows_list.append((str(row).strip('[]')).strip("''"))
+				new_rows_list.append("<b>" + (str(row).strip('[]')).strip("''") + "</b>")
 				topicFromFriend = 1
 			else: #the person is not a friend, so next line not to be appended
 				topicFromFriend =0 			
-			counter=counter+1
-	print "<br>".join(map(str,new_rows_list))
+			counter=counter+1	
+	counter = 0
+	for feed in reversed(new_rows_list):
+		if counter < 20: #counting until 20 because it should be the 20 last fields
+ 			print_feed.append(feed)
+			counter = counter+1
+	print_feed.reverse() #because right now it is topic - user, rather than user, topic
+	print "<br>".join(map(str, print_feed))	
 
 
 #appends username and new post to csv
 def addPost():
 	if (postForm.getvalue('formname') == "addpost"):
 		with open('../data/topic.csv', 'a') as csvfile:
-                	csvfile.write(currentusername + '\n')
+	               	csvfile.write(currentusername + '\n')
 			csvfile.write(postForm.getvalue('joke') + '\n')
 
 #append member name to user's row in members.csv
@@ -110,14 +113,12 @@ print """
                             </p>
                         </td>
                         <!-- (4) 10 most recent jokes from friends -->
-                        <td width="462" height="546" valign="top" rowspan="3">
-                            <p align="center"><font size="5"><b> CS Funnies News Feed </b></font></p>
-                            <p align="center"> """
+                        <td width="462" height="546" valign="top" rowspan="3" >
+                            <p align="center"><font size="5"><b> CS Funnies News Feed </b></font></p>"""
 
 printFeed()
 
 print """
-			   </p>
                         </td>
                     </tr>
                     <tr>
