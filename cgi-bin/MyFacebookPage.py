@@ -7,17 +7,17 @@ currentusername = postForm.getvalue("username")
 
 #prints all registered members in a list
 def printMembers():
-	with open('members.csv','r') as csvfile:
+	with open('../data/members.csv','r') as csvfile:
 		reader = csv.reader(csvfile)
 		print "<ul>"
 		for row in reader:
 			print "<li>" + row[1] + "</li>"
 		print "</ul>"
 
-#searches if element of row is friend of crrent user
+#searches if element of row is friend of current user
 def isFriend(elementOfTopic):
 	foundFriend = False
-	with open('members.csv','r') as csvfile:
+	with open('../data/members.csv','r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
 			if row [1] == currentusername:
@@ -35,19 +35,25 @@ def isFriend(elementOfTopic):
 #prints user's friends list (up to 10 posts)
 def printFeed():
 	new_rows_list = []
-	with open('topic.csv', 'r') as csvfile:
+	counter = 1 #keep track of the line we are at (odd = user, even = topic)
+	topicFromFriend =0 #We know if the next line will be a topic from friend
+	topicsPrinted = 0 #we only want 10 posts in news feed	
+	with open('../data/topic.csv', 'r') as csvfile:
 		reader = csv.reader(csvfile)
 		for row in reader:
-			if isFriend(row[0]) == True:
-				new_rows_list.append(row)
-				nextrow = reader.next()
-				new_rows_list.append(nextrow)
-	for feed in new_rows_list:
-		counter = 0
-		if counter < 20:
-			print feed[0]
-			print "<br>"
-			counter += 1
+			if topicsPrinted > 10: #if we reached 10posts, we quit
+				break	
+			if counter%2==0:
+				if topicFromFriend==1:
+					new_rows_list.append((str(row).strip('[]')).strip("''"))
+					topicsPrinted=topicsPrinted+1
+			elif isFriend(row[0]) == True:
+				new_rows_list.append((str(row).strip('[]')).strip("''"))
+				topicFromFriend = 1
+			else: #the person is not a friend, so next line not to be appended
+				topicFromFriend =0 			
+			counter=counter+1
+	print "<br>".join(map(str,new_rows_list))
 
 
 #appends username and new post to csv
@@ -61,7 +67,7 @@ def addPost():
 def addFriend():
 	if (postForm.getvalue("formname") == "addfriend"):
 		new_rows_list = []
-		with open('members.csv', 'r') as csvfile:
+		with open('../data/members.csv', 'r') as csvfile:
 			reader = csv.reader(csvfile)
 			for row in reader:
 				if row[1] == currentusername:
@@ -76,7 +82,7 @@ def addFriend():
 						new_rows_list.append(row)
 				else:
 					new_rows_list.append(row)
-		with open('members.csv','w') as csvfile:
+		with open('../data/members.csv','w') as csvfile:
 				writer = csv.writer(csvfile)
 				writer.writerows(new_rows_list)
 
