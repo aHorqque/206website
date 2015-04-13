@@ -76,7 +76,7 @@ def addFriend():
 					if foundFriend == False:
 						new_row = row + postForm.getvalue("friend").split()
 						new_rows_list.append(new_row)
-						print """This user has been added! Refresh to see their posts: <a href="../loginsuccess.html"> click here to see their posts</a>""" 							
+						print "This user has been added! Login again to see their posts." 		
 					else:
 						new_rows_list.append(row)
 				else:
@@ -87,6 +87,7 @@ def addFriend():
 
 print"Content-Type: text/html\n\n"
 print """
+
 <html>
     <head>
         <title> CS Funnies - Feed </title>

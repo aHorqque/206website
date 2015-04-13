@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
                 printf("<br>");
                 printf("Oops! You seem to have entered the wrong password\"%f\"", check);
                 printf("<br>");       
-                printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");         
+                printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");
                 printf("<br>");
                 printf("<br>");
                 //printf(<img src="http://40.media.tumblr.com/tumblr_lkdkryTFbR1qiinzao1_400.png">);
@@ -81,20 +81,24 @@ int main(int argc, char *argv[]){
 	
 	free(password);
 	
-	file_ptr = fopen("../loginsuccess.html", "rt");
-	char *page_line = (char*)malloc(256);
-	*(page_line+255) = '\0';
-	int counter;
-	
-	for(counter=0;counter<LINE_NUMBER-1;counter++)
-		printf("%s",fgets(page_line,255,file_ptr));
-	printf("\t\t <input type=\"hidden\" name=\"user\" value=\"%s\">\n", username);
-	fgets(page_line,255,file_ptr);
-	while(!feof(file_ptr))
-		printf("%s",fgets(page_line,255,file_ptr));
-	fclose(file_ptr);
-
-	free(page_line);	
+	printf("<head>");
+	printf("<title>");
+	printf("CS Funnies - Login Success!");
+	printf("</title>");
+	printf("<center>");
+	printf("<body>");
+	printf("<br>");
+	printf("<h1>COMPSCI FUNNIES! </h1>");
+	printf("Login Success! Click below to access your news feed!");
+	printf("<br>");
+	printf("<form action=\"./MyFacebookPage.py\" method=\"POST\" id=\"loginsuccess\">");
+	printf("<input type=\"hidden\" name=\"username\" value=\"%s\">\n",username);
+	printf("<a href=# onclick=\"document.getElementById('loginsuccess').submit()\"> Go! </a>");
+	printf("</form>");
+	printf("<br>");	
+	printf("</body>");
+	printf("</center>");
+	 
 	free(username);
 	return EXIT_SUCCESS;
 }
@@ -119,30 +123,50 @@ void getInput(char *str, int *count, int max){
 	}
 	str[index+1]='\0';
 	free(escChar);
-
 }
 
 int  searchUser(char *username,char *password,char *line){
     char *token;
+	char *temp;
+	int returnValue;
+    	token = strtok(line,",");
+    	//just in case
+    	if (token == NULL) return -500;
+    
+   	 token = strtok(NULL,",");
+    
+	if (token == NULL) return -500;
+	
+	//user not found
+	if (strcmp(token,username)!=0) return -1;
+   
+	 //cut up the token better,cuz we are not really seeing the pssword
+	temp = strtok(strtok(NULL,","), "\n");
+	if(temp==NULL){ // then user has no friends	
+		token = strtok(NULL,"\n");
+		if (token==NULL) 
+			returnValue=-500;
+		if (strcmp(token,password) != 0) 
+			returnValue=0;
+		printf("correct password:\"%s\"<br>", token);
+                printf("password entered:\"%s\"<br>",password);	
+		return returnValue;
+	}
 
-    token = strtok(line,",");
-    //error on the line, possibly empty
-    if (token == NULL) return -2;
+	if(temp!=NULL){
+		token = strtok(NULL, ",");
+                if (token==NULL) 
+			returnValue=-500;
+                if (strcmp(token,password)!=0) 
+			returnValue=0;
+		printf("correct password:\"%s\"<br>", token);
+		printf("password entered:\"%s\"<br>",password);
+		return returnValue;
+	}
 
-    token = strtok(NULL,",");
-    //error on the line, missing field
-    if (token == NULL) return -2;
-    //user not found
-    if (strcmp(token,username)!=0) return -1;
-
-    token = strtok(NULL,"\n");
-    //error on the line, missing field
-    if (token == NULL) return -2;
-    //user found but wrong password
-    if (strcmp(token,password)!=0) return 0;
-
-    //username passes all tests
+    //yay! we are logged in!
     else return 1;
+
 }
 
 
