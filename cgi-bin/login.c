@@ -126,51 +126,51 @@ void getInput(char *str, int *count, int max){
 }
 
 int  searchUser(char *username,char *password,char *line){
-    char *token;
+    	char *token;
 	char *temp;
 	int returnValue;
-    	token = strtok(line,",");
+	
+    	token = strtok(line,","); //by here token=name
     	//just in case
     	if (token == NULL) return -500;
-    
-   	 token = strtok(NULL,",");
-    
-	if (token == NULL) return -500;
-	
-	//user not found
-	if (strcmp(token,username)!=0) return -1;
+		
+	token = strtok(NULL,","); //token = user
    
-	 //cut up the token better,cuz we are not really seeing the pssword
-	temp = strtok(strtok(NULL,","), "\n");
-	if(temp==NULL){ // then user has no friends	
-		token = strtok(NULL,"\n");
-		if (token==NULL) 
-			returnValue=-500;
-		if (strcmp(token,password) != 0) 
-			returnValue=0;
-		printf("correct password:\"%s\"<br>", token);
-                printf("password entered:\"%s\"<br>",password);	
-		return returnValue;
-	}
+	if (token == NULL) return -500;
+	printf(token);	
+	//user not found
+ 	if (strcmp(token,username)!=0) return -1;
+	else{
 
-	if(temp!=NULL){
-		token = strtok(NULL, ",");
-                if (token==NULL) 
-			returnValue=-500;
-                if (strcmp(token,password)!=0) 
-			returnValue=0;
-		printf("correct password:\"%s\"<br>", token);
-		printf("password entered:\"%s\"<br>",password);
-		return returnValue;
+		//cut the line at "," if the user has friends, then token = pw, otherwise, token="pw\n"
+		token =  strtok(NULL,",");
+		strcpy(temp,token); // copy password to separate two cases describe above
+		token = strtok(NULL,"\n"); // as mentioned, for those with friends, this is not null
+	
+		if(token==NULL){ // then user has no friend
+			temp = strtok(temp,"\n");
+			if(temp==NULL) 
+				returnValue=-500;
+			else if(strcmp(temp,password)!=0) 
+				returnValue=0;
+			else returnValue=1;
+			return returnValue;
+		}
+	
+		else if(token!=NULL){ //token = list of friends i.e. not null
+        	        if (temp==NULL) 
+				returnValue=-500;
+                	else if (strcmp(temp,password)!=0) 
+				returnValue=0;
+			else returnValue = 1;
+			return returnValue;
+		}		
+		//else return 1; // right user, no password match
 	}
-
     //yay! we are logged in!
-    else return 1;
+    	//else return 1;
 
 }
-
-
-	
 
 
 
