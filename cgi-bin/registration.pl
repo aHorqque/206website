@@ -109,7 +109,7 @@ else{
 	#open(my $fh, '>>', $filename);
 	if($newUser==1){
 		open(my $fh, '>>', $file);
-		print $fh "$name,$username,$password \n";
+		print $fh "$name,$username,$password\n";
 		print qq(<div align = "center">);
 		print qq(<body>);
 		print qq(<h1> COMPSCI FUNNIES </h1>);

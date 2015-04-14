@@ -59,6 +59,8 @@ def addPost():
 		with open('../data/topic.csv', 'a') as csvfile:
 	               	csvfile.write(currentusername + '\n')
 			csvfile.write(postForm.getvalue('joke') + '\n')
+			print "<a href=\"../welcome.html\"> Login to see their posts </a>"
+
 
 #append member name to user's row in members.csv
 def addFriend():
@@ -76,7 +78,8 @@ def addFriend():
 					if foundFriend == False:
 						new_row = row + postForm.getvalue("friend").split()
 						new_rows_list.append(new_row)
-						print "This user has been added! Login again to see their posts." 		
+						print "This user has been added!"
+						print "<a href=\"../welcome.html\"> Login to see their posts </a>"
 					else:
 						new_rows_list.append(row)
 				else:
@@ -151,7 +154,7 @@ print """
                         <!-- (5) A list of all the current users -->
                         <td width="141">
                             <div>
-                                <p align="center"><strong>Members</strong></p> """
+                                <p align="center"><strong></strong></p> """
 
 printMembers()
 

@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
                 printf("<body>");
                 printf("<h1> COMPSCI FUNNIES </h1>");
                 printf("<br>");
-                printf("Oops! You seem to have entered the wrong password\"%f\"", check);
+                printf("Oops! You seem to have entered the wrong password");
                 printf("<br>");       
                 printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");
                 printf("<br>");
@@ -160,17 +160,13 @@ int  searchUser(char *username,char *password,char *line){
 		else if(token!=NULL){ //token = list of friends i.e. not null
         	        if (temp==NULL) 
 				returnValue=-500;
-                	else if (strcmp(temp,password)!=0) 
+                	else if (strcmp(temp,password)!=0) // userfound no pw march :(
 				returnValue=0;
-			else returnValue = 1;
+			else returnValue = 1;//user found&&password match!!
 		}		
-		//else return 1; // right user, no password match
 	}
 	free(temp);
 	return returnValue;
-    //yay! we are logged in!
-    	//else return 1;
-
 }
 
 
