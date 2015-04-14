@@ -126,6 +126,12 @@ else{
 	}
 }
 
+ #-- Signature -->
+	print qq(<div align = center>);
+	print qq(<font size=\"1\"> Website made by Andrea Horqque and Sophia Lim 2015 </font>);
+        print qq(</div>);
+
+
 exit 0;	
 	
 

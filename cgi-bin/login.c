@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 	getInput(username, &count, data_size);
 	getInput(password, &count, data_size);
 	if(strcmp(username, "") == 0 || strcmp(password, "")==0){
-		printf("<div align = \"center\">");
+		printf("<div align = center>");
 		printf("<body>");
 		printf("<h1> COMPSCI FUNNIES </h1>");
 		printf("<br>");
@@ -30,9 +30,12 @@ int main(int argc, char *argv[]){
 		printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");
 		printf("<br>");
 		printf("<br>");
-		//printf(<img src="http://40.media.tumblr.com/tumblr_lkdkryTFbR1qiinzao1_400.png">);
+		printf("<img src=\"http://www.codeproject.com/KB/bugs/787668/null-pointer-exception.png\">");
 		printf("</body>");
-		printf("</div>");
+		printf("<br>");
+                printf("<font size=\"1\"> Website made by Andrea Horqque and Sophia Lim 2015 </font>");
+                printf("</div>");
+
 		return EXIT_FAILURE;}
 	
 	//check if user exists...
@@ -49,7 +52,7 @@ int main(int argc, char *argv[]){
 	fclose(file_ptr);
 	
     if (check == -1){
-	 	printf("<div align = <\"center\">");
+	 	printf("<div align = center >");
                 printf("<body>");
                 printf("<h1> COMPSCI FUNNIES </h1>");
                 printf("<br>");
@@ -60,13 +63,16 @@ int main(int argc, char *argv[]){
 		printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");
                 printf("<br>");
                 printf("<br>");
-                //printf(<img src="http://40.media.tumblr.com/tumblr_lkdkryTFbR1qiinzao1_400.png">);
+                printf("<img src=\"https://s-media-cache-ak0.pinimg.com/236x/95/d5/c9/95d5c9343dfc37b3d479c43e9fafea59.jpg\">");
                 printf("</body>");
+                printf("<br>");
+                printf("<font size=\"1\"> Website made by Andrea Horqque and Sophia Lim 2015 </font>");
                 printf("</div>");
+
                 return EXIT_FAILURE;}
 
     if (check == 0){
-		printf("<div align = <\"center\">");
+		printf("<div align = center>");
                 printf("<body>");
                 printf("<h1> COMPSCI FUNNIES </h1>");
                 printf("<br>");
@@ -75,9 +81,12 @@ int main(int argc, char *argv[]){
                 printf("<a href=\"../welcome.html\"> back to the welcome page! </a>");
                 printf("<br>");
                 printf("<br>");
-                //printf(<img src="http://40.media.tumblr.com/tumblr_lkdkryTFbR1qiinzao1_400.png">);
+                printf("<img src=\"https://s-media-cache-ak0.pinimg.com/736x/af/56/fa/af56fa5603e4e57922996dc76bc0aad3.jpg\">");
                 printf("</body>");
-                printf("</div>");
+		printf("<br>");
+                printf("<font size=\"1\"> Website made by Andrea Horqque and Sophia Lim 2015 </font>");
+		printf("</div>");
+
                 return EXIT_FAILURE;}
 	
 	free(password);
@@ -98,7 +107,10 @@ int main(int argc, char *argv[]){
 	printf("</form>");
 	printf("<br>");	
 	printf("</body>");
-	printf("</center>");
+	printf("<img src=\"http://imgs.xkcd.com/comics/pointers.png\">");
+	printf("<br>");
+        printf("<font size=\"1\"> Website made by Andrea Horqque and Sophia Lim 2015 </font>");
+        printf("</center>");	
 	 
 	free(username);
 	return EXIT_SUCCESS;
