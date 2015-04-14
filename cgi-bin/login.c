@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 	char *line = (char *)malloc(LINE_SIZE+1); //again allocating for the \0
 	int check; 
 	
-	fgets(line, LINE_SIZE, file_ptr);
+	//fgets(line, LINE_SIZE, file_ptr);
 		for(fgets(line, LINE_SIZE, file_ptr);!feof(file_ptr); fgets(line, LINE_SIZE, file_ptr)){
         	check = searchUser(username, password, line);
 	if(check>=0)
