@@ -42,7 +42,8 @@ int main(int argc, char *argv[]){
 	
 	fgets(line, LINE_SIZE, file_ptr);
 		for(fgets(line, LINE_SIZE, file_ptr);!feof(file_ptr); fgets(line, LINE_SIZE, file_ptr)){
-	if((check = searchUser(username,password,line))>=0)
+        	check = searchUser(username, password, line);
+	if(check>=0)
 		break;
 	}
 	fclose(file_ptr);
@@ -127,9 +128,9 @@ void getInput(char *str, int *count, int max){
 
 int  searchUser(char *username,char *password,char *line){
     	char *token;
-	char *temp;
+	char *temp = malloc(strlen(password));
 	int returnValue;
-	
+
     	token = strtok(line,","); //by here token=name
     	//just in case
     	if (token == NULL) return -500;
@@ -137,13 +138,13 @@ int  searchUser(char *username,char *password,char *line){
 	token = strtok(NULL,","); //token = user
    
 	if (token == NULL) return -500;
-	printf(token);	
 	//user not found
- 	if (strcmp(token,username)!=0) return -1;
+ 	if (strcmp(token,username)!=0) 
+		returnValue = -1;
 	else{
 
 		//cut the line at "," if the user has friends, then token = pw, otherwise, token="pw\n"
-		token =  strtok(NULL,",");
+		token =  strtok(NULL,",\xD\xA");
 		strcpy(temp,token); // copy password to separate two cases describe above
 		token = strtok(NULL,"\n"); // as mentioned, for those with friends, this is not null
 	
@@ -154,7 +155,6 @@ int  searchUser(char *username,char *password,char *line){
 			else if(strcmp(temp,password)!=0) 
 				returnValue=0;
 			else returnValue=1;
-			return returnValue;
 		}
 	
 		else if(token!=NULL){ //token = list of friends i.e. not null
@@ -163,10 +163,11 @@ int  searchUser(char *username,char *password,char *line){
                 	else if (strcmp(temp,password)!=0) 
 				returnValue=0;
 			else returnValue = 1;
-			return returnValue;
 		}		
 		//else return 1; // right user, no password match
 	}
+	free(temp);
+	return returnValue;
     //yay! we are logged in!
     	//else return 1;
 
