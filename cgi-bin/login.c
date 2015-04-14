@@ -8,18 +8,22 @@
 #define LINE_SIZE NAME_SIZE+MAXUSR+MAXPASS+2 //since there are two commas
 #define LINE_NUMBER 36
 
-void   getInput(char *str, int *password, int max);
-int  searchUser(char *username,char *password,char *line);
+void getInput(char *str, int *password, int max);
+int searchUser(char *username,char *password,char *line);
 
 int main(int argc, char *argv[]){
 	printf("Content-type: text/html\n\n");
 	printf("<html>\n\n");
+	//Getting length of input
 	int data_size = atoi(getenv("CONTENT_LENGTH"));
+	//Allocating memory for username and password by considering NUL terminator
 	char *username = (char *)malloc(MAXUSR+1),
 		*password = (char *)malloc(MAXPASS+1);
 	int count = 0;
+	//Getting username and password
 	getInput(username, &count, data_size);
 	getInput(password, &count, data_size);
+	//If username and password submitted have no input
 	if(strcmp(username, "") == 0 || strcmp(password, "")==0){
 		printf("<div align = center>");
 		printf("<body>");
@@ -38,16 +42,18 @@ int main(int argc, char *argv[]){
 
 		return EXIT_FAILURE;}
 	
-	//check if user exists...
+	//Opening members.csv
 	FILE *file_ptr = fopen("../data/members.csv", "rt");
-	char *line = (char *)malloc(LINE_SIZE+1); //again allocating for the \0
+	//Allocating memory to line with NUL terminator
+	char *line = (char *)malloc(LINE_SIZE+1);
 	int check; 
 	
-	//fgets(line, LINE_SIZE, file_ptr);
-		for(fgets(line, LINE_SIZE, file_ptr);!feof(file_ptr); fgets(line, LINE_SIZE, file_ptr)){
+	//Read first line and search user while it is not end of file. Then, read next line
+	for(fgets(line, LINE_SIZE, file_ptr);!feof(file_ptr); fgets(line, LINE_SIZE, file_ptr)){
         	check = searchUser(username, password, line);
-	if(check>=0)
-		break;
+			//If check 
+			if(check>=0)
+			break;
 	}
 	fclose(file_ptr);
 	
@@ -138,7 +144,7 @@ void getInput(char *str, int *count, int max){
 	free(escChar);
 }
 
-int  searchUser(char *username,char *password,char *line){
+int searchUser(char *username,char *password,char *line){
     	char *token;
 	char *temp = malloc(strlen(password));
 	int returnValue;
