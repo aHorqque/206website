@@ -42,7 +42,7 @@ elsif((index($name, ",") != -1) || (index($username, ",") != -1) || (index($pass
 	print qq(</div>);
 }
 #no blank spaces allowed
-elsif((index($name, " ") != -1) || (index($username, " ") != -1) || (index($password, " ")!=-1)){
+elsif((index($username, " ") != -1) || (index($password, " ")!=-1)){
         print qq(<div align = "center">);
         print qq(<body>);
         print qq(<h1> COMPSCI FUNNIES </h1>);
