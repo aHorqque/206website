@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	FILE *file_ptr = fopen("../data/members.csv", "rt");
 	//Allocating memory to line with NUL terminator
 	char *line = (char *)malloc(LINE_SIZE+1);
-	int check; 
+	int check = -1; 
 	
 	//Read first line and search user while it is not end of file. Then, read next line
 	for(fgets(line, LINE_SIZE, file_ptr);!feof(file_ptr); fgets(line, LINE_SIZE, file_ptr)){
